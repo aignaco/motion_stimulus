@@ -1,4 +1,5 @@
 #include <IRROBOT_ServoTesterShield.h>
+#include <MightyZap.h>
 
 #define ID_NUM 0
 
@@ -10,7 +11,8 @@ void setup() {
   while (! Serial);    
 }
 
-void loop() {     
+void loop() 
+{     
   if(Serial.available())  {    
     char ch = Serial.read();
     if(ch=='d')    {

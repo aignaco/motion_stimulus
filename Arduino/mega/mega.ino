@@ -5,14 +5,14 @@
 
 #define SERVO_ID_SPEED 11 // Each motor has a code so the herkulex bus can identify which motor to send the command to. 
 
-HerkulexServoBus herkulex_bus(Serial1); // this is the transmission line for the herkulex motors. In other words, the bus goes to each motor and tells it which command to run. 
+HerkulexServoBus herkulex_bus(Serial); // this is the transmission line for the herkulex motors. In other words, the bus goes to each motor and tells it which command to run. 
 HerkulexServo    servoS(herkulex_bus, SERVO_ID_SPEED); // speed motor
 
 int dirPin_1 = 2; // pin to move Mtr 1 motor CW or CCW
 int pulPin_1 = 3; // pin to move Mtr 1 motor
 
 int timeBetweenSteps = 200; // delay between microsteps
-int numSteps = 0; // total number of steps
+// int numSteps = 0; // total number of steps
 int angleDirection = 0; // direction of motion to move (1 = CW; 0 = CCW)
 int fullRevSteps = 6400; // number of steps for a full revolution 
 
@@ -22,7 +22,7 @@ void setup() {
   pinMode(pulPin_1, OUTPUT);
 
   Serial.begin(115200);
-  Serial1.begin(115200);
+  // Serial1.begin(115200);
 
   delay(500);
   
@@ -48,9 +48,9 @@ void loop() {
     if (commandFromMatlab == 6){
       int mtrNum = Serial.parseInt(); 
       int angleDirection = Serial.parseInt();
-      int angle = Serial.parseInt();
+      int numSteps = Serial.parseInt();
 
-      numSteps = fullRevSteps / (360 / angle); 
+      // numSteps = fullRevSteps / (360 / angle); 
 
       if (mtrNum == 1){
         if (angleDirection == 1){
@@ -70,7 +70,7 @@ void loop() {
       }
     }
 
-    else if (commandFromMatlab == 2) { // run motor with duration 
+    else if (commandFromMatlab == 3) { // run motor with duration 
       unsigned long start_millis;
 
       servoS.setTorqueOn();
@@ -89,7 +89,7 @@ void loop() {
       servoS.setLedColor(HerkulexLed::Off);
     }
 
-    else if (commandFromMatlab == 3) { // run motor without duration  
+    else if (commandFromMatlab == 4) { // run motor without duration  
 
       servoS.setTorqueOn();
       servoS.enableSpeedControlMode();

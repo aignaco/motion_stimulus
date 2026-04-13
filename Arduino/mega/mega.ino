@@ -45,7 +45,7 @@ void loop() {
   {
     int commandFromMatlab = Serial.parseInt();
 
-    if (commandFromMatlab == 6){
+    if (commandFromMatlab == 6){ // rotate large stepper motor; input = [mtrNum angleDirection numSteps]
       int mtrNum = Serial.parseInt(); 
       int angleDirection = Serial.parseInt();
       int numSteps = Serial.parseInt();
@@ -70,7 +70,7 @@ void loop() {
       }
     }
 
-    else if (commandFromMatlab == 3) { // run motor with duration 
+    else if (commandFromMatlab == 3) { // run motor with a given duration from the input; input = [givenSpeed, givenDuration]
       unsigned long start_millis;
 
       servoS.setTorqueOn();
@@ -89,7 +89,7 @@ void loop() {
       servoS.setLedColor(HerkulexLed::Off);
     }
 
-    else if (commandFromMatlab == 4) { // run motor without duration  
+    else if (commandFromMatlab == 4) { // run motor without a set duration; input = [givenSpeed]  
 
       servoS.setTorqueOn();
       servoS.enableSpeedControlMode();
